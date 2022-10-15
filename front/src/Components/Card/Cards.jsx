@@ -8,9 +8,9 @@ import Rating from "@mui/material/Rating";
 
 export default function Cards(props) {
   const [value, setValue] = React.useState(0);
+  
   return (
     <div className="cards">
-      {console.log(props.ele)}
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia

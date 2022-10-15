@@ -7,7 +7,7 @@ import Reset from "./Components/Reset/Reset";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Header from "./Components/Header/Header";
 import Grids from "./Components/Grid/Grids";
-import axios from "axios"
+import axios from "axios";
 
 
 function App() {

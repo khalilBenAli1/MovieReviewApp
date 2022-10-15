@@ -1,4 +1,7 @@
-import * as React from 'react';
+
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import {  Link,useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,15 +15,38 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link, useNavigate } from "react-router-dom";
+
+
+import { auth, db, logout } from "../../firebase.js";
+import { query, collection, getDocs, where } from "firebase/firestore";
 
 
 const pages = ['Movies'];
 const settings = ['Profil', 'Favorite','Logout'];
 
 const Header = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const navigate = useNavigate();
+  const fetchUserName = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      setName(data.name);
+
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  };
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/");
+    fetchUserName();
+  }, [user, loading]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -114,25 +140,27 @@ const Header = () => {
             }}
           >
             <Link to="/">
-            LOGO
+            TUNIMDB
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+           
               <Button
-                key={page}
+                key="0"
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link to="/"> Movies</Link>
               </Button>
-            ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+           { auth.currentUser===null ? 
+           <Typography textAlign="center"><Link to="/login">Login</Link></Typography>
+           :
+           <>
+           <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={name} src={user.photoURL}/>
               </IconButton>
             </Tooltip>
             <Menu
@@ -151,12 +179,13 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center"><Link to="/login">{setting}</Link></Typography>
+             
+                <MenuItem key="0" onClick={logout}>
+                  <Typography textAlign="center"><Link to="/">logout</Link></Typography>
                 </MenuItem>
-              ))}
             </Menu>
+            </>
+          }
           </Box>
         </Toolbar>
       </Container>

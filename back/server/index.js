@@ -20,12 +20,13 @@ const options = {
   
   axios.request(options).then(function (response) {
     response.data.results.forEach(e => {
-      console.log(e.titleText)
         save.save(e);
       });    
-  }).catch(function (error) {
-      console.error(error);
-  });
+  })
+  .catch((err) => {
+     if(err ) throw err;
+    }
+  );
 
   app.get("/movies", function (req, res) {
     save.movies.find({},function (err,data){

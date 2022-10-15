@@ -7,11 +7,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/Movies")
 // mongoose.connect(process.env.MONGO_URL);
 
 let MovieSchema = mongoose.Schema({
-  titleText: String,
+  titleText: {type:String,unique:true},
   release: String,
   image: String,
   rate: Number,
-  comment: Object,
+  comment: [{ body: String, img:String , userName:String ,rate:Number}],
 
 });
 
@@ -21,7 +21,7 @@ let saveMovie = (obj) => {
   let movies = new Movies({
     titleText: obj.titleText.text,
     release: obj.releaseYear.year,
-    image:obj.primaryImage.url,
+    image:obj.primaryImage?.url,
     rate:0,
     comment:{users:{user:'test'}}
     
