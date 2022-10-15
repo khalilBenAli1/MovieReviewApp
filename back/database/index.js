@@ -1,32 +1,37 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+let mongoose = require("mongoose");
 
+mongoose.connect("mongodb://127.0.0.1:27017/Movies")
+.then(() => console.log("connected"))
+.catch((err) => console.log(err));
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCdWCGQfH9GQR0-JcZno7HFRNVfRkl3CVg",
-    authDomain: "movieapp-84541.firebaseapp.com",
-    projectId: "movieapp-84541",
-    storageBucket: "movieapp-84541.appspot.com",
-    messagingSenderId: "1033651500453",
-    appId: "1:1033651500453:web:71adfec512c41d518da44c",
-    measurementId: "G-V78HXPQT1X"
-  };
+// mongoose.connect(process.env.MONGO_URL);
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+let MovieSchema = mongoose.Schema({
+  titleText: String,
+  release: String,
+  image: String,
+  rate: Number,
+  comment: Object,
 
-// Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(app);
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
+});
+
+let Movies = mongoose.model("Movies", MovieSchema);
+
+let saveMovie = (obj) => {
+  let movies = new Movies({
+    titleText: obj.titleText.text,
+    release: obj.releaseYear.year,
+    image:obj.primaryImage.url,
+    rate:0,
+    comment:{users:{user:'test'}}
+    
   });
+  
+    movies.save().then((res) => console.log("succes"));
+
+ 
+   
+};
+
+module.exports.save = saveMovie;
+module.exports.movies = Movies;
