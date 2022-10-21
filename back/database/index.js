@@ -17,21 +17,12 @@ let MovieSchema = mongoose.Schema({
 
 let Movies = mongoose.model("Movies", MovieSchema);
 
-let saveMovie = (obj) => {
-  let movies = new Movies({
-    titleText: obj.titleText.text,
-    release: obj.releaseYear.year,
-    image:obj.primaryImage?.url,
-    rate:0,
-    comment:{users:{user:'test'}}
-    
-  });
-  
-    movies.save().then((res) => console.log("succes"));
-
- 
-   
+module.exports = {
+  saveMovie : (arr) => {
+      return Movies.insertMany(arr)
+      },
+  findMovies :()=>{
+    return Movies.find({})
+  }
 };
 
-module.exports.save = saveMovie;
-module.exports.movies = Movies;
