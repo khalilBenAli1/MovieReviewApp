@@ -11,7 +11,6 @@ const getMovies =()=>{
           'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
         }
       };
-      console.log(axios(options))
      return axios(options)
 }
 

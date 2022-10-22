@@ -16,13 +16,13 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Grids(props) {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 3 }}>
       
-      <Grid container spacing={3}>
+      <Grid container spacing={1}>
       {
         props.data.map((e)=>
           
-          <Grid item key={e._id} xs={12} sm={6} md={4} lg={3}>
+          <Grid item key={e._id} xs={11} sm={5} md={3} lg={2}>
             <Cards ele={e} />
         </Grid >
         )

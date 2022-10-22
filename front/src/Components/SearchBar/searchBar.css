@@ -1,0 +1,11 @@
+.searchBar{
+    width: 80%;
+    
+}
+.searchContainer{
+    padding: 30px;
+    background-color: #383838;
+}
+.MuiOutlinedInput-root{
+    background-color: white;
+}

@@ -42,4 +42,10 @@ body{
 }
 .cards{
   margin-top: 20px;
+  margin-left: 10px;
+}
+a:-webkit-any-link {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
 }

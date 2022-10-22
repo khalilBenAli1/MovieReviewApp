@@ -15,12 +15,12 @@ export default function Cards(props) {
       <CardActionArea>
         <CardMedia
           component="img"
-          height="500"
+          height="300"
           image={props.ele.image}
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="h9" component="div">
            {props.ele.titleText}
           </Typography>
           {/* <Rating
@@ -31,16 +31,11 @@ export default function Cards(props) {
             }}
           ></Rating> */}
           <Rating name="read-only" value={props.ele.rate} readOnly></Rating>
-          <Typography gutterBottom variant="h7" component="div">
+          <Typography gutterBottom variant="h10" component="div">
             Release Date : {props.ele.release}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Rate
-        </Button>
-      </CardActions>
     </Card>
     </div>
   );

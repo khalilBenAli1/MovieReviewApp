@@ -8,7 +8,8 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import Header from "./Components/Header/Header";
 import Grids from "./Components/Grid/Grids";
 import axios from "axios";
-
+import { TextField } from "@mui/material";
+import SearchBar from "./Components/SearchBar/SearchBar";
 
 function App() {
  const [data,setData]=useState([])
@@ -24,7 +25,8 @@ function App() {
   return (
     <div className="app">
       <Router>
-      <Header/>      
+      <Header/> 
+      <SearchBar/>
         <Routes>
           <Route path="/" element={<Grids data={data}/>} />
           <Route exact path="/Login" element={<Login />} />

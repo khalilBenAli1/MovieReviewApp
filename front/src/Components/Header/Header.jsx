@@ -14,7 +14,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+
+
 
 
 import { auth, db, logout } from "../../firebase.js";
@@ -22,7 +23,6 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 
 
 const pages = ['Movies'];
-const settings = ['Profil', 'Favorite','Logout'];
 
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -64,7 +64,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" style={{backgroundColor:"black"}}>
+    <AppBar position="static" style={{backgroundColor:"#1f1f1f"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           
@@ -79,8 +79,9 @@ const Header = () => {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
+              
             }}
           >
             TUNIMDB
@@ -122,7 +123,7 @@ const Header = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          
           <Typography
             variant="h5"
             noWrap
@@ -153,6 +154,7 @@ const Header = () => {
                 <Link to="/"> Movies</Link>
               </Button>
           </Box>
+          
           <Box sx={{ flexGrow: 0 }}>
            { auth.currentUser===null ? 
            <Typography textAlign="center"><Link to="/login">Login</Link></Typography>
